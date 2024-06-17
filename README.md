@@ -38,7 +38,7 @@
 |VMPORT|是||Vmess 协议监听端口|
 |UUID|是|de04add9-5c68-8bab-950c-08cd5320df18||
 |WSPATH|是|serv00|勿以 / 开头，协议路径为 /WSPATH-协议，如 /serv00-vmess|
-|ARGO_AUTH|否||Argo 的 Token 值，ey 开头的一串，获取方法可以参考[群晖套件：Cloudflare Tunnel 内网穿透中文教程 支持DSM6、7](https://imnks.com/5984.html)|
+|ARGO_AUTH|否||Argo 的 Token 值，ey 开头的一串，获取方法可以参考[群晖套件：Cloudflare Tunnel 内网穿透中文教程 支持DSM6、7](https://imnks.com/5984.html) （如果需要填写，请删除单引号再填写，不填则保持原样。）|
 |ARGO_DOMAIN|否||Argo 的域名，须与 ARGO_DOMAIN 必需一起填了才能生效|
 |WEB_USERNAME|否|admin|网页的用户名|
 |WEB_PASSWORD|否|password|网页的密码|
