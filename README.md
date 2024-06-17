@@ -50,7 +50,7 @@
 ```
 chmod +x start.sh && bash start.sh
 ```
-最后等待一分钟左右，等程序完全启动，再打开之前添加的 `Websites` ，并进入`/list`路径（如`https://xxx.USERNAME.serv00.net/list`）获取代理配置。
+最后等待一分钟左右，等程序完全启动，再直接使用 IP 访问 `WEBPORT` ，并进入`/list`路径（如`http://1.2.3.4:54321/list`）获取代理配置。（IP 可在 Panel 的 SSL 选项卡中，点击 WWW websites 后看到，一般有两个，任选其一即可。）
 
 ### 自动启动
 
