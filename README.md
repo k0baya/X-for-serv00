@@ -10,7 +10,7 @@
 
 ### 部署
 
-首先在 Panel 中放行三个个端口，接着按照下表 Add a New Website ：
+首先在 Panel 中放行三个个端口，并在 Additional services 选项卡中找到 Run your own applications 项目，将其设置为 Enabled 。接着按照下表 Add a New Website ：
 
 | Key          | Value                                                                          |
 | ------------ | ------------------------------------------------------------------------------ |
