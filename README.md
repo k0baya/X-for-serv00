@@ -34,8 +34,8 @@
 |变量名|是否必须|默认值|备注|
 |-|-|-|-|
 |WEBPORT|是||网页端口，查看代理配置、获取订阅链接等等功能需要|
-|LISTENPORT|是||Xray监听端口|
-|VMPORT|是||Vmess协议监听端口|
+|LISTENPORT|是||Xray 监听端口|
+|VMPORT|是||Vmess 协议监听端口|
 |UUID|是|de04add9-5c68-8bab-950c-08cd5320df18||
 |WSPATH|是|serv00|勿以 / 开头，协议路径为 /WSPATH-协议，如 /serv00-vmess|
 |ARGO_AUTH|否||Argo 的 Token 值，ey 开头的一串，获取方法可以参考[群晖套件：Cloudflare Tunnel 内网穿透中文教程 支持DSM6、7](https://imnks.com/5984.html)|
@@ -43,12 +43,14 @@
 |WEB_USERNAME|否|admin|网页的用户名|
 |WEB_PASSWORD|否|password|网页的密码|
 
+接着在 Cloudflare Argo Tunnel 的面板中，给这条隧道添加一个域名，域名为刚刚填写的 `ARGO_DOMAIN` ，协议为 `HTTP` ，地址为`localhost:`加上刚刚填写的 `VMPORT` （如 `localhost:54321` ）。
+
 最后 SSH 登录 Serv00 ，进入 `start.sh` 所在的路径，直接执行即可启动。
 
 ```
 chmod +x start.sh && bash start.sh
 ```
-最后等待一分钟左右，等程序完全启动，再打开之前添加的 `WWW websites` ，并进入`/list`路径（如`https://username.serv00.net/list`）获取代理配置。
+最后等待一分钟左右，等程序完全启动，再打开之前添加的 `Websites` ，并进入`/list`路径（如`https://xxx.USERNAME.serv00.net/list`）获取代理配置。
 
 ### 自动启动
 
