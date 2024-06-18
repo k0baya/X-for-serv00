@@ -10,7 +10,7 @@
 
 ### 部署
 
-首先在 Panel 中放行三个个端口，并在 Additional services 选项卡中找到 Run your own applications 项目，将其设置为 Enabled 。接着按照下表 Add a New Website ：
+首先在 Panel 中放行两个端口，并在 Additional services 选项卡中找到 Run your own applications 项目，将其设置为 Enabled 。接着按照下表 Add a New Website ：
 
 | Key          | Value                                                                          |
 | ------------ | ------------------------------------------------------------------------------ |
@@ -34,7 +34,6 @@
 |变量名|是否必须|默认值|备注|
 |-|-|-|-|
 |WEBPORT|是||网页端口，查看代理配置、获取订阅链接等等功能需要|
-|LISTENPORT|是||Xray 监听端口|
 |VMPORT|是||Vmess 协议监听端口|
 |UUID|是|de04add9-5c68-8bab-950c-08cd5320df18||
 |WSPATH|是|serv00|勿以 / 开头，协议路径为 /WSPATH-协议，如 /serv00-vmess|
@@ -50,7 +49,7 @@
 ```
 chmod +x start.sh && bash start.sh
 ```
-最后等待一分钟左右，等程序完全启动，再直接使用 IP 访问 `WEBPORT` ，并进入`/list`路径（如`http://1.2.3.4:54321/list`）获取代理配置。（IP 可在 Panel 的 SSL 选项卡中，点击 WWW websites 后看到，一般有两个，任选其一即可。）
+最后等待一分钟左右，等程序完全启动，再直接使用 IP 访问 `WEBPORT` ，并进入`/list`路径（如`http://1.2.3.4:54321/list`）获取代理配置。（IP 可在 Panel 的 SSL 选项卡中，点击 WWW websites 后看到，一般有两个 IP ，任选其一即可。）
 
 ### 自动启动
 

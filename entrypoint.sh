@@ -1,6 +1,5 @@
 WSPATH=${WSPATH:-'serv00'}  # WS 路径前缀。(注意:伪装路径不需要 / 符号开始,为避免不必要的麻烦,请不要使用特殊符号.)
 UUID=${UUID:-'de04add9-5c68-8bab-950c-08cd5320df18'}
-LISTENPORT=${LISTENPORT:-'3000'}
 VMPORT=${VMPORT:-'3001'}
 WEBPORT=${WEBPORT:-'3002'}
 
@@ -13,28 +12,6 @@ generate_config() {
         "loglevel": "none"
     },
     "inbounds": [
-        {
-            "port":${LISTENPORT},
-            "protocol":"vless",
-            "settings":{
-                "clients":[
-                    {
-                        "id":"${UUID}",
-                        "flow":"xtls-rprx-vision"
-                    }
-                ],
-                "decryption":"none",
-                "fallbacks":[
-                    {
-                        "path":"/${WSPATH}-vmess",
-                        "dest":${VMPORT}
-                    }
-                ]
-            },
-            "streamSettings":{
-                "network":"tcp"
-            }
-        },
         {
             "port":${VMPORT},
             "listen":"127.0.0.1",
@@ -136,14 +113,6 @@ ingress:
   - hostname: \$ARGO_DOMAIN
     service: http://localhost:${VMPORT}
 EOF
-#       [ -n "\${SSH_DOMAIN}" ] && cat >> tunnel.yml << EOF
-#   - hostname: \$SSH_DOMAIN
-#     service: http://localhost:2222
-# EOF
-#     [ -n "\${FTP_DOMAIN}" ] && cat >> tunnel.yml << EOF
-#   - hostname: \$FTP_DOMAIN
-#     service: http://localhost:3333
-# EOF
       cat >> tunnel.yml << EOF
     originRequest:
       noTLSVerify: true
