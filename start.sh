@@ -2,7 +2,6 @@
 
 # 端口参数 （必填）
 export WEBPORT=
-export LISTENPORT=
 export VMPORT=
 
 # web.js 参数 （必填）
