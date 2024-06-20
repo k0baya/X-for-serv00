@@ -9,26 +9,10 @@
 且本仓库在源仓库的基础上添加了订阅功能，在`/list`路径列表下可以看到订阅地址，如果不固定 ARGO 隧道，也可以通过订阅地址获取最新配置，而不需要打开网页查看。
 
 ### 部署
+#### 准备工作
+首先在 Panel 中放行两个端口，并在 Additional services 选项卡中找到 Run your own applications 项目，将其设置为 Enabled 。
 
-首先在 Panel 中放行两个端口，并在 Additional services 选项卡中找到 Run your own applications 项目，将其设置为 Enabled 。接着按照下表 Add a New Website ：
-
-| Key          | Value                                                                          |
-| ------------ | ------------------------------------------------------------------------------ |
-| Domain       | `xxx.USERNAME.serv00.net`（也可以把原有的 USERNAME.serv00.net 删掉后重新添加） |
-| Website Type | proxy                                                                          |
-| Proxy Target | localhost                                                                      |
-| Proxy URL    | 留空                                                                           |
-| Proxy port   | 你准备用来部署本仓库的 WEB 的端口（即 `start.sh` 变量中的`WEBPORT`）                                                    |
-| Use HTPPS    | False                                                                          |
-| DNS support  | True                                                                           |
-
-添加完新站点后，继续点击上方的 Manage SSL certificates ，接着在出口 IP 的右侧点击 Manage ，再点击 Add certificate ：
-
-| Type                                 | Domain                                                                           |
-| ------------------------------------ | -------------------------------------------------------------------------------- |
-| Generate Let's Encrypted certificate | 与刚刚添加的站点域名保持一致（如果是原有的`USERNAME.serv00.net` ，可以省略此步） |
-
-接着进入 File manager，并进入刚刚你新建的域名目录下，将本仓库的文件都上传到此目录下。
+接着进入 File manager，在用户目录下的任意路径新建一个文件夹用于部署 X-for-Serv00，并将本仓库的文件都上传到此文件夹内。
 
 右键点击 `start.sh` 文件，选择 View/Edit > Source Editor ，进行编辑，在 1 - 18 行修改环境变量：
 |变量名|是否必须|默认值|备注|
@@ -42,9 +26,13 @@
 |WEB_USERNAME|否|admin|网页的用户名|
 |WEB_PASSWORD|否|password|网页的密码|
 
-接着在 Cloudflare Argo Tunnel 的面板中，给这条隧道添加一个域名，域名为刚刚填写的 `ARGO_DOMAIN` ，协议为 `HTTP` ，地址为`localhost:`加上刚刚填写的 `VMPORT` （如 `localhost:54321` ）。
+#### 固定 Argo 隧道
+如果你填入了ARGO_AUTH 和 ARGO_DOMAIN 环境变量，想用于固定 Argo 隧道，那么就需要执行此步。否则可以跳过。
 
-最后 SSH 登录 Serv00 ，进入 `start.sh` 所在的路径，直接执行即可启动。
+在 Cloudflare Argo Tunnel 的面板中，给这条隧道添加一个域名，域名为刚刚填写的 `ARGO_DOMAIN` ，协议为 `HTTP` ，地址为`localhost:`加上刚刚填写的 `VMPORT` （如 `localhost:54321` ）。
+
+#### 启动并获取配置
+SSH 登录 Serv00 ，进入 `start.sh` 所在的路径，直接执行即可启动。
 
 ```
 chmod +x start.sh && bash start.sh
