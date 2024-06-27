@@ -43,6 +43,7 @@ generate_config() {
     ],
     "dns": {
         "servers": [
+            "https+local://1.1.1.1/dns-query",
             "https+local://8.8.8.8/dns-query"
         ]
     },
@@ -75,12 +76,24 @@ generate_config() {
         }
     ],
     "routing": {
-        "domainStrategy": "AsIs",
+        "domainStrategy": "IPIfNonMatch",
         "rules": [
             {
                 "type": "field",
                 "outboundTag": "WARP",
-                "network": "tcp,udp"
+                "domain":[
+                    "domain:openai.com",
+                    "domain:chatgpt.com",
+                    "domain:ai.com",
+                    "domain:netflix.com"
+                ]
+            },
+            {
+                "type": "field",
+                "outboundTag": "WARP",
+                "ip": [
+                    "::/0"
+                ]
             }
         ]
     }
