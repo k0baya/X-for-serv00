@@ -19,7 +19,12 @@ export WEB_PASSWORD=
 # 启动程序
 USERNAME=$(whoami)
 WORKDIR="/home/${USERNAME}/xray"
+mkdir -p ${WORKDIR}
 cd ${WORKDIR} && \
+[ ! -e ${WORKDIR}/entrypoint.sh ] && wget https://raw.githubusercontent.com/k0baya/X-for-serv00/main/entrypoint.sh -O ${WORKDIR}/entrypoint.sh && chmod +x ${WORKDIR}/entrypoint.sh && \
+[ ! -e ${WORKDIR}/server.js ] && wget https://raw.githubusercontent.com/k0baya/X-for-serv00/main/server.js -O ${WORKDIR}/server.js && \
+[ ! -e ${WORKDIR}/package.json ] && wget https://raw.githubusercontent.com/k0baya/X-for-serv00/main/package.json -O ${WORKDIR}/package.json && \
+echo 'Installing dependence......Please wait for a while.' && \
 npm install >/dev/null 2>&1 && \
 nohup node ${WORKDIR}/server.js >/dev/null 2>&1 &
-echo 'X-for-Serv00 is starting up, please press the Enter key.'
+sleep 10 && echo 'X-for-Serv00 is trying to start up, please press the Enter key.'
