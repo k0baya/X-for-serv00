@@ -17,5 +17,9 @@ export WEB_USERNAME=
 export WEB_PASSWORD=
 
 # 启动程序
-npm install && \
-nohup node server.js 2>/dev/null 2>&1 &
+USERNAME=$(whoami)
+WORKDIR="/home/${USERNAME}/xray"
+cd ${WORKDIR} && \
+npm install >/dev/null 2>&1 && \
+nohup node ${WORKDIR}/server.js >/dev/null 2>&1 &
+echo 'X-for-Serv00 is starting up, please press the Enter key.'
