@@ -159,7 +159,7 @@ Clash:
 - {name: Argo-k0baya-Vmess, type: vmess, server: alejandracaiccedo.com, port: 443, uuid: ${UUID}, alterId: 0, cipher: none, tls: true, skip-cert-verify: true, network: ws, ws-opts: {path: /${WSPATH}-vmess?ed=2048, headers: {Host: \${ARGO_DOMAIN}}}, udp: true}
 *******************************************
 EOF
-  cat list
+  sleep 5 && cat list
 }
 
 check_file
