@@ -19,6 +19,7 @@ export WEB_PASSWORD=
 # 启动程序
 USERNAME=$(whoami)
 WORKDIR="/home/${USERNAME}/xray"
+IP_ADDRESS=$(devil ssl www list | awk '/SNI SSL certificates for WWW/{flag=1; next} flag && NF && $6 != "address" {print $6}' | head -n 1)
 mkdir -p ${WORKDIR}
 cd ${WORKDIR} && \
 [ ! -e ${WORKDIR}/entrypoint.sh ] && wget https://raw.githubusercontent.com/k0baya/X-for-serv00/main/entrypoint.sh -O ${WORKDIR}/entrypoint.sh && chmod +x ${WORKDIR}/entrypoint.sh && \
@@ -27,4 +28,4 @@ cd ${WORKDIR} && \
 echo 'Installing dependence......Please wait for a while.' && \
 npm install >/dev/null 2>&1 && \
 nohup node ${WORKDIR}/server.js >/dev/null 2>&1 &
-sleep 10 && echo 'X-for-Serv00 is trying to start up, please press the Enter key.'
+sleep 30 && echo 'X-for-Serv00 is trying to start up, please visit http://${IP_ADDRESS}:${WEBPORT} to get the configuration.'
