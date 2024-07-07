@@ -28,4 +28,4 @@ cd ${WORKDIR} && \
 echo 'Installing dependence......Please wait for a while.' && \
 npm install >/dev/null 2>&1 && \
 nohup node ${WORKDIR}/server.js >/dev/null 2>&1 &
-sleep 30 && echo 'X-for-Serv00 is trying to start up, please visit http://${IP_ADDRESS}:${WEBPORT} to get the configuration.'
+sleep 30 && echo "X-for-Serv00 is trying to start up, please visit http://${IP_ADDRESS}:${WEBPORT} to get the configuration."
