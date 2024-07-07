@@ -44,6 +44,6 @@ chmod +x start.sh && bash start.sh
 在 Panel 中找到 Cron jobs 选项卡，使用 Add cron job 功能添加任务，Specify time 选择 After reboot，即为重启后运行。Form type 选择 Advanced，Command 写 `start.sh` 文件的绝对路径，比如：
 
 ```
-/home/username/domains/argo-x/start.sh
+/home/username/domains/argo-x/start.sh >/dev/null 2>&1
 ```
 > 务必按照你的实际路径进行填写。
