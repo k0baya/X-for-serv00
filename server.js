@@ -60,9 +60,35 @@ app.get("/status", function (req, res) {
 });
 
 //获取节点数据
-app.get("/list", function (req, res) {
+app.get("/list", async function (req, res) {
   let cmdStr = "cat list";
-  const sub = UUID
+  const sub = UUID;
+
+  const fileExists = (path) => {
+    return new Promise((resolve, reject) => {
+      fs.access(path, fs.constants.F_OK, (err) => {
+        resolve(!err);
+      });
+    });
+  };
+
+  const waitForFile = async (path, retries, interval) => {
+    for (let i = 0; i < retries; i++) {
+      if (await fileExists(path)) {
+        return true;
+      }
+      await new Promise(resolve => setTimeout(resolve, interval));
+    }
+    return false;
+  };
+
+  const fileReady = await waitForFile('list', 30, 1000);
+
+  if (!fileReady) {
+    res.type("html").send("<pre>文件未生成</pre>");
+    return;
+  }
+
   exec(cmdStr, function (err, stdout, stderr) {
     if (err) {
       res.type("html").send("<pre>命令行执行错误：\n" + err + "</pre>");
