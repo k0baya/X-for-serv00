@@ -139,7 +139,7 @@ EOF
     nohup ./cloudflared tunnel --edge-ip-version auto --protocol http2 --no-autoupdate --url http://localhost:${VMPORT} 2>/dev/null 2>&1 &
     sleep 12
     while [ -z "\$ARGO_DOMAIN" ]; do
-      LOCALHOST=\$(sockstat -4 -l -P tcp | grep cloudflare | awk '{print \$6}')
+      LOCALHOST=\$(sockstat -4 -l -P tcp | grep cloudflare | awk '{print \$5}')
       ARGO_DOMAIN=\$(wget -qO- \$LOCALHOST/quicktunnel | jq -r '.hostname')
       if [ -z "\$ARGO_DOMAIN" ]; then
         sleep 2 
