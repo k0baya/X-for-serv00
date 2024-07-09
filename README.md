@@ -24,7 +24,9 @@
 |WEB_USERNAME|否|admin|网页的用户名|
 |WEB_PASSWORD|否|password|网页的密码|
 
-#### 固定 Argo 隧道
+#### 固定 Argo 隧道（**建议执行**）
+由于 [#972](https://github.com/cloudflare/cloudflared/issues/972) 可知，CLoudflare 临时隧道存在一定的数量限制，达到限制后需要等待几小时才能创建临时隧道，当达到限制时，会导致 X-for-Serv00 启动失败，而如果固定 Argo 隧道，自己填入 `ARGO_AUTH` 和 `ARGO_DOMAIN` 变量，则可以无视此限制，确保 X-for-Serv00 正常启动。
+
 如果你填入了ARGO_AUTH 和 ARGO_DOMAIN 环境变量，想用于固定 Argo 隧道，那么就需要执行此步。否则可以跳过。
 
 在 Cloudflare Argo Tunnel 的面板中，给这条隧道添加一个域名，域名为刚刚填写的 `ARGO_DOMAIN` ，协议为 `HTTP` ，地址为`localhost:`加上刚刚填写的 `VMPORT` （如 `localhost:54321` ）。
