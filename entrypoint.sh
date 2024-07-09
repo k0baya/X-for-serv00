@@ -119,7 +119,7 @@ run() {
       echo "\$ARGO_AUTH" | sed 's@{@{"@g;s@[,:]@"\0"@g;s@}@"}@g' > tunnel.json
       cat > tunnel.yml << EOF
 tunnel: \$(sed "s@.*TunnelID:\(.*\)}@\1@g" <<< "\$ARGO_AUTH")
-credentials-file: /app/tunnel.json
+credentials-file: ~/xray/tunnel.json
 protocol: http2
 
 ingress:
@@ -138,13 +138,31 @@ EOF
   else
     nohup ./cloudflared tunnel --edge-ip-version auto --protocol http2 --no-autoupdate --url http://localhost:${VMPORT} 2>/dev/null 2>&1 &
     sleep 12
-    while [ -z "\$ARGO_DOMAIN" ]; do
+    
+#    while [ -z "\$ARGO_DOMAIN" ]; do
+#      LOCALHOST=\$(sockstat -4 -l -P tcp | grep cloudflare | awk '{print \$5}')
+#      ARGO_DOMAIN=\$(wget -qO- \$LOCALHOST/quicktunnel | jq -r '.hostname')
+#      if [ -z "\$ARGO_DOMAIN" ]; then
+#        sleep 2 
+#      fi
+#    done
+
+    attempt_count=0
+    max_attempts=10
+
+    while [ -z "\$ARGO_DOMAIN" ] && [ \$attempt_count -lt \$max_attempts ]; do
       LOCALHOST=\$(sockstat -4 -l -P tcp | grep cloudflare | awk '{print \$5}')
       ARGO_DOMAIN=\$(wget -qO- \$LOCALHOST/quicktunnel | jq -r '.hostname')
       if [ -z "\$ARGO_DOMAIN" ]; then
-        sleep 2 
+        sleep 2
+        attempt_count=\$((attempt_count + 1))
       fi
     done
+
+    if [ -z "\$ARGO_DOMAIN" ]; then
+      echo "警告！当前IP创建Cloudflare临时隧道数量已超出每小时限制，请删除~/xray，并等待一小时后重试。" > list
+      echo "Warning! The number of Cloudflare temporary tunnels created by the current IP has exceeded the hourly limit, please remove ~/xray and wait one hour before retrying." >> list
+    fi
   fi
 }
 
@@ -169,7 +187,7 @@ EOF
 
 check_file
 run
-sleep 12 && export_list
+sleep 12 && [ -n "\$ARGO_DOMAIN" ] && export_list
 ABC
 }
 
