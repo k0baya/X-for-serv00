@@ -10,7 +10,7 @@
 #### 准备工作
 首先在 Panel 中放行两个端口，并在 Additional services 选项卡中找到 Run your own applications 项目，将其设置为 Enabled 。
 
-接着进入 File manager，在用户目录下的任意路径新建一个文件夹用于部署 X-for-Serv00，并将本仓库的文件都上传到此文件夹内。
+接着进入 File manager，新建 `~/xray` 路径用于部署 X-for-Serv00，并将本仓库的文件都上传到 `~/xray` 内。
 
 右键点击 `start.sh` 文件，选择 View/Edit > Source Editor ，进行编辑，在 1 - 18 行修改环境变量：
 |变量名|是否必须|默认值|备注|
