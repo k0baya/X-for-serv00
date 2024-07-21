@@ -1,6 +1,6 @@
 ## X-for-Serv00
 
-直连版本，不使用 Cloudflare CDN，并且去掉了网页。采用 Vless-xtls-vision、Vmess-tls-ws、Trojan-tls 三协议，每个协议 3 个接入点，共 9 个节点，需要单一账号部署，账号内不得部署其他应用。已通过 Warp 解锁 ChatGPT、Netflix，并添加 IPv6。
+直连版本，不使用 Cloudflare CDN，并且去掉了网页。采用 Vless-xtls-vision-reality、Vmess-tls-ws、Trojan-tls 三协议，每个协议 3 个接入点，共 9 个节点，需要单一账号部署，账号内不得部署其他应用。已通过 Warp 解锁 ChatGPT、Netflix，并添加 IPv6。
 
 ### 部署
 #### 准备工作
@@ -29,7 +29,7 @@ SSH 登录 Serv00 ，直接执行启动脚本即可启动。
 ```
 chmod +x ~/direct-xray/start.sh && bash ~/direct-xray/start.sh
 ```
-等待程序完成启动，会在 Terminal 中直接打印出 Vless-xtls-vision、Vmess-tls-ws、Trojan-tls 的配置链接。
+等待程序完成启动，会在 Terminal 中直接打印出 Vless-xtls-vision-reality、Vmess-tls-ws、Trojan-tls 的配置链接。
 
 ### 自动启动
 
