@@ -236,13 +236,13 @@ EOF
 Vless配置：
 
         
-vless://${UUID}@${MAINHOST}:${VLPORT}?security=reality&encryption=none&pbk=G0LAF0i9NRrHpAWbnrjYyLQ86o0PfeJDDQ5hm_73Mkk&headerType=none&fp=chrome&type=tcp&flow=xtls-rprx-vision&sni=www.serv00.com&sid=ff04#🇵🇱Vl-k0baya-xtls-vision-PL
+vless://${UUID}@${MAINHOST}:${VLPORT}?security=reality&encryption=none&pbk=G0LAF0i9NRrHpAWbnrjYyLQ86o0PfeJDDQ5hm_73Mkk&headerType=none&fp=chrome&type=tcp&flow=xtls-rprx-vision&sni=www.serv00.com&sid=ff04#🇵🇱Vl-k0baya-xtls-vision-reality-PL
 
 
-vless://${UUID}@${SPAREHOST1}:${VLPORT}?security=reality&encryption=none&pbk=G0LAF0i9NRrHpAWbnrjYyLQ86o0PfeJDDQ5hm_73Mkk&headerType=none&fp=chrome&type=tcp&flow=xtls-rprx-vision&sni=www.serv00.com&sid=ff04#🇵🇱Vl-k0baya-xtls-vision-PL
+vless://${UUID}@${SPAREHOST1}:${VLPORT}?security=reality&encryption=none&pbk=G0LAF0i9NRrHpAWbnrjYyLQ86o0PfeJDDQ5hm_73Mkk&headerType=none&fp=chrome&type=tcp&flow=xtls-rprx-vision&sni=www.serv00.com&sid=ff04#🇵🇱Vl-k0baya-xtls-vision-reality-PL
 
 
-vless://${UUID}@${SPAREHOST2}:${VLPORT}?security=reality&encryption=none&pbk=G0LAF0i9NRrHpAWbnrjYyLQ86o0PfeJDDQ5hm_73Mkk&headerType=none&fp=chrome&type=tcp&flow=xtls-rprx-vision&sni=www.serv00.com&sid=ff04#🇵🇱Vl-k0baya-xtls-vision-PL
+vless://${UUID}@${SPAREHOST2}:${VLPORT}?security=reality&encryption=none&pbk=G0LAF0i9NRrHpAWbnrjYyLQ86o0PfeJDDQ5hm_73Mkk&headerType=none&fp=chrome&type=tcp&flow=xtls-rprx-vision&sni=www.serv00.com&sid=ff04#🇵🇱Vl-k0baya-xtls-vision-reality-PL
 
        
 ----------------------------
