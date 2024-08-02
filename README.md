@@ -13,6 +13,9 @@
 新版本做出了较大修改，目前实现 Vless、Vmess、Trojan 三协议并存，去除了临时隧道的使用，仅支持固定隧道使用。故不再支持订阅功能。
 
 流量是由客户端经由 Cloudflare CDN 转发到 Serv00，再由 Xray 判断是否通过 Warp 转发到目标。支持 IPv6。
+
+>如果你还想安装 nezha 探针，可以参考 [k0baya/nezha4serv00](https://github.com/k0baya/nezha4serv00) 。
+
 ### 部署
 #### 准备工作
 
@@ -41,7 +44,7 @@ bash <(curl -s https://raw.githubusercontent.com/k0baya/X-for-serv00/main/entryp
 
 #### 启动并获取配置
 
-按照脚本提示进入 `/status` 的网页，并尝试刷新页面，直到进程列表中出现了包含 `web.js` 以及 `cloudfalred` 字样的进程，就代表 X-for-Serv00 已经启动成功。此时你就可以通过访问 `/list` 路径查看到 X-for-Serv00 所提供的配置链接了。
+按照脚本提示进入 `/status` 的网页，并尝试刷新页面，直到进程列表中出现了包含 `web.js` 以及 `cloudfalred` 字样的进程，就代表 X-for-Serv00 已经启动成功。此时你就可以通过访问 `/list` 路径查看到 X-for-Serv00 所提供的配置链接了。![](/pic/process.png)
 
 ### 自动启动
 
