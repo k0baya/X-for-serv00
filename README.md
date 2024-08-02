@@ -6,50 +6,53 @@
 ----
 ## X-for-Serv00
 
-项目特点与 Argo-Xray-JS-PaaS 基本一致，但是由于 Serv00 端口数量限制，本仓库仅实现了 vmess 协议，并删除了 webssh 以及 webftp 以及探针的功能。
+>~~项目特点与 Argo-Xray-JS-PaaS 基本一致，但是由于 Serv00 端口数量限制，本仓库仅实现了 vmess 协议，并删除了 webssh 以及 webftp 以及探针的功能。~~
+>
+>~~而且本仓库流量通过 Warp 增加了 IPv6 支持。并在源仓库的基础上添加了订阅功能，在`/list`路径列表下可以看到订阅地址，如果不固定 ARGO 隧道，也可以通过订阅地址获取最新配置，而不需要打开网页查看。~~
 
-而且本仓库流量通过 Warp 增加了 IPv6 支持。并在源仓库的基础上添加了订阅功能，在`/list`路径列表下可以看到订阅地址，如果不固定 ARGO 隧道，也可以通过订阅地址获取最新配置，而不需要打开网页查看。
+新版本做出了较大修改，目前实现 Vless、Vmess、Trojan 三协议并存，去除了临时隧道的使用，仅支持固定隧道使用。故不再支持订阅功能。
 
+流量是由客户端经由 Cloudflare CDN 转发到 Serv00，再由 Xray 判断是否通过 Warp 转发到目标。支持 IPv6。
 ### 部署
 #### 准备工作
-首先在 Panel 中放行两个端口，并在 Additional services 选项卡中找到 Run your own applications 项目，将其设置为 Enabled 。
 
-接着进入 File manager，新建 `~/xray` 路径用于部署 X-for-Serv00，并将本仓库的文件都上传到 `~/xray` 内。
+首先你需要至少拥有一个托管在 Cloudflare 的域名。
 
-右键点击 `start.sh` 文件，选择 View/Edit > Source Editor ，进行编辑，在 1 - 18 行修改环境变量：
-|变量名|是否必须|默认值|备注|
-|-|-|-|-|
-|WEBPORT|是||网页端口，查看代理配置、获取订阅链接等等功能需要|
-|VMPORT|是||Vmess 协议监听端口|
-|UUID|是|de04add9-5c68-8bab-950c-08cd5320df18||
-|WSPATH|是|serv00|勿以 / 开头，协议路径为 /WSPATH-协议，如 /serv00-vmess|
-|ARGO_AUTH|否||Argo 的 Token 值，ey 开头的一串，获取方法可以参考[群晖套件：Cloudflare Tunnel 内网穿透中文教程 支持DSM6、7](https://imnks.com/5984.html) （如果需要填写，请删除单引号再填写，不填则保持原样。）|
-|ARGO_DOMAIN|否||Argo 的域名，须与 ARGO_DOMAIN 必需一起填了才能生效|
-|WEB_USERNAME|否|admin|网页的用户名|
-|WEB_PASSWORD|否|password|网页的密码|
+然后参考[群晖套件：Cloudflare Tunnel 内网穿透中文教程 支持DSM6、7](https://imnks.com/5984.html)的教程，在 Cloudflare 控制面板中创建一个 Argo Tunnel，把其中 ey 开头的一串 Token 记录下来备用。
 
-#### 固定 Argo 隧道（**建议执行**）
-由于 [#972](https://github.com/cloudflare/cloudflared/issues/972) 可知，CLoudflare 临时隧道存在一定的数量限制，达到限制后需要等待几小时才能创建临时隧道，当达到限制时，会导致 X-for-Serv00 启动失败，而如果固定 Argo 隧道，自己填入 `ARGO_AUTH` 和 `ARGO_DOMAIN` 变量，则可以无视此限制，确保 X-for-Serv00 正常启动。
+同时你还需要一个 Serv00 的账号。
 
-如果你填入了ARGO_AUTH 和 ARGO_DOMAIN 环境变量，想用于固定 Argo 隧道，那么就需要执行此步。否则可以跳过。
+#### 部署 X-for-Serv00
 
-在 Cloudflare Argo Tunnel 的面板中，给这条隧道添加一个域名，域名为刚刚填写的 `ARGO_DOMAIN` ，协议为 `HTTP` ，地址为`localhost:`加上刚刚填写的 `VMPORT` （如 `localhost:54321` ）。
+SSH 登录 Serv00，输入以下命令：
+```shell
+bash <(curl -s https://raw.githubusercontent.com/k0baya/X-for-serv00/main/entrypoint.sh)
+```
+并按照提示输入相关信息。
+
+>**注意**
+>
+>其中 `ARGO_AUTH`、`ARGO_DOMAIN_VL`、`ARGO_DOMAIN_VM`、`ARGO_DOMAIN_TR` 四个变量是必须的，其他变量根据需要填写。非必须的变量可以按回车跳过，使用默认值。
+>
+>`ARGO_AUTH` 为上述的 ey 开头的一串 Token。
+>
+>`ARGO_DOMAIN_VL`、`ARGO_DOMAIN_VM`、`ARGO_DOMAIN_TR` 分别为 Vless、VMess、Trojan 协议的域名，请使用你域名的子域进行设置，如下图：![](/pic/argo.png)
+
 
 #### 启动并获取配置
-SSH 登录 Serv00 ，进入 `start.sh` 所在的路径，直接执行即可启动。
 
-```
-chmod +x start.sh && bash start.sh
-```
-最后等待一分钟左右，等程序完全启动，再直接使用 IP 访问 `WEBPORT` ，并进入`/list`路径（如`http://1.2.3.4:54321/list`）获取代理配置。（IP 可在 Panel 的 SSL 选项卡中，点击 WWW websites 后看到，一般有两个 IP ，任选其一即可。）
+按照脚本提示进入 `/status` 的网页，并尝试刷新页面，直到进程列表中出现了包含 `web.js` 以及 `cloudfalred` 字样的进程，就代表 X-for-Serv00 已经启动成功。此时你就可以通过访问 `/list` 路径查看到 X-for-Serv00 所提供的配置链接了。
 
 ### 自动启动
 
-听说 Serv00 的主机会不定时重启，所以需要添加自启任务。
+此次版本更新之后，X-for-Serv00 已经可以摆脱 Serv00 的 Crontab 启动，你可以通过访问网页对项目进行唤醒，如果你需要保活，可以使用以下公共服务对网页进行监控：
 
-在 Panel 中找到 Cron jobs 选项卡，使用 Add cron job 功能添加任务，Specify time 选择 After reboot，即为重启后运行。Form type 选择 Advanced，Command 写 `start.sh` 文件的绝对路径，比如：
+1 [cron-job.org](https://console.cron-job.org)
 
-```
-/home/username/domains/argo-x/start.sh >/dev/null 2>&1
-```
-> 务必按照你的实际路径进行填写。
+2 [UptimeRobot](https://uptimerobot.com/) 
+
+同时，你也可以选择自建 [Uptime-Kuma](https://github.com/louislam/uptime-kuma) 等服务进行监控。
+
+### 更换 Cloudflare CDN 接入点
+
+目前本仓库使用的默认 Cloudflare CDN 接入点为 `upos-sz-mirrorcf1ov.bilivideo.com:443` ，如果这个接入点在你的网络中表现不佳，你可以选择使用 [XIU2/CloudflareSpeedTest](https://github.com/XIU2/CloudflareSpeedTest) 或者其他优选 IP / 域名 替换导出的配置中的 Cloudflare CDN 接入点。**注意，只需要修改客户端的配置，不要修改已经部署的 X-for-Serv00 项目。**

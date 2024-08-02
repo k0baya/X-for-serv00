@@ -1,21 +1,26 @@
 {
-  "name": "express-hello-world",
+  "name": "X-for-Serv00",
   "version": "1.0.0",
-  "description": "Express Hello World",
-  "main": "server.js",
+  "description": "A simple Express.js server to run X on Serv00",
+  "author": "k0baya (https://github.com/k0baya)",
+  "main": "app.js",
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "node server.js"
+    "start": "node app.js"
   },
   "dependencies": {
     "express": "^4.18.2",
-    "http-proxy-middleware": "^3.0.0-beta.0",
-    "request": "^2.88.2",
     "basic-auth": "^2.0.1",
     "dotenv": "^16.0.3"
   },
   "engines": {
-    "node": ">=14"
-  }
+    "node": "22"
+  },
+  "repository": {
+    "url": "https://github.com/k0baya/x-for-serv00"
+  },
+  "keywords": [
+    "node"
+  ]
 }
