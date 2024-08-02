@@ -27,7 +27,11 @@
 
 #### 部署 X-for-Serv00
 
-SSH 登录 Serv00，输入以下命令：
+SSH 登录 Serv00，输入以下命令以激活运行许可：
+```shell
+devil binexec on
+```
+接着断开 SSH 并重新连接，输入以下命令：
 ```shell
 bash <(curl -s https://raw.githubusercontent.com/k0baya/X-for-serv00/main/entrypoint.sh)
 ```
