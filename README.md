@@ -19,11 +19,11 @@
 ### 部署
 #### 准备工作
 
-首先你需要至少拥有一个托管在 Cloudflare 的域名。
+首先你需要至少拥有 1 个托管在 Cloudflare 的域名。
 
-然后参考[群晖套件：Cloudflare Tunnel 内网穿透中文教程 支持DSM6、7](https://imnks.com/5984.html)的教程，在 Cloudflare 控制面板中创建一个 Argo Tunnel，把其中 ey 开头的一串 Token 记录下来备用。
+然后参考[群晖套件：Cloudflare Tunnel 内网穿透中文教程 支持DSM6、7](https://imnks.com/5984.html) 的教程，在 Cloudflare 控制面板中创建 1 个 Argo Tunnel，把其中 ey 开头的一串 Token 记录下来备用。
 
-同时你还需要一个 Serv00 的账号。
+同时你还需要 1 个 Serv00 的账号。
 
 #### 部署 X-for-Serv00
 
@@ -39,16 +39,22 @@ bash <(curl -s https://raw.githubusercontent.com/k0baya/X-for-serv00/main/entryp
 
 >**注意**
 >
->其中 `ARGO_AUTH`、`ARGO_DOMAIN_VL`、`ARGO_DOMAIN_VM`、`ARGO_DOMAIN_TR` 四个变量是必须的，其他变量根据需要填写。非必须的变量可以按回车跳过，使用默认值。
+>其中 `ARGO_AUTH`、`ARGO_DOMAIN_VL`、`ARGO_DOMAIN_VM`、`ARGO_DOMAIN_TR` 4 个变量是必须的，其他变量根据需要填写。非必须的变量可以按回车跳过，使用默认值。
 >
 >`ARGO_AUTH` 为上述的 ey 开头的一串 Token。
 >
->`ARGO_DOMAIN_VL`、`ARGO_DOMAIN_VM`、`ARGO_DOMAIN_TR` 分别为 Vless、VMess、Trojan 协议的域名，请使用你域名的子域进行设置，如下图：![](/pic/argo.png)
+>`ARGO_DOMAIN_VL`、`ARGO_DOMAIN_VM`、`ARGO_DOMAIN_TR` 分别为 Vless、VMess、Trojan 协议的域名，请使用你域名的子域进行设置，如下图：
+>
+>![](/pic/argo.png)
+>
+>**注意**，是在 1 条隧道内添加 3 个子域名指向 3 个 URL，不是 3 条隧道每个添加 1 个子域名。
 
 
 #### 启动并获取配置
 
-按照脚本提示进入 `/status` 的网页，并尝试刷新页面，直到进程列表中出现了包含 `web.js` 以及 `cloudfalred` 字样的进程，就代表 X-for-Serv00 已经启动成功。此时你就可以通过访问 `/list` 路径查看到 X-for-Serv00 所提供的配置链接了。![](/pic/process.png)
+按照脚本提示进入 `/status` 的网页，并尝试刷新页面，直到进程列表中出现了包含 `web.js` 以及 `cloudfalred` 字样的进程，就代表 X-for-Serv00 已经启动成功。此时你就可以通过访问 `/list` 路径查看到 X-for-Serv00 所提供的配置链接了。
+
+![](/pic/process.png)
 
 ### 自动启动
 
@@ -63,3 +69,8 @@ bash <(curl -s https://raw.githubusercontent.com/k0baya/X-for-serv00/main/entryp
 ### 更换 Cloudflare CDN 接入点
 
 目前本仓库使用的默认 Cloudflare CDN 接入点为 `upos-sz-mirrorcf1ov.bilivideo.com:443` ，如果这个接入点在你的网络中表现不佳，你可以选择使用 [XIU2/CloudflareSpeedTest](https://github.com/XIU2/CloudflareSpeedTest) 或者其他优选 IP / 域名 替换导出的配置中的 Cloudflare CDN 接入点。**注意，只需要修改客户端的配置，不要修改已经部署的 X-for-Serv00 项目。**
+
+### 常见问题
+1. 已知部分客户端（如 V2rayNG）可能出现导入配置识别不正确的情况，如 vless 协议 `ws path` 在默认值的情况下原本为 `/serv00-vless?ed-2560` ，会被客户端识别为 `/serv00-vless?ed` 等等不完整的情况，通过手动补全即可正常使用。
+
+补充中... 
