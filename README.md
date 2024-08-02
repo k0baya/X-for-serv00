@@ -14,6 +14,8 @@
 
 流量是由客户端经由 Cloudflare CDN 转发到 Serv00，再由 Xray 判断是否通过 Warp 转发到目标。支持 IPv6。
 
+网页根路径为伪装页面，来自 [AkariRin/mikutap](https://github.com/AkariRin/mikutap)
+
 >如果你还想安装 nezha 探针，可以参考 [k0baya/nezha4serv00](https://github.com/k0baya/nezha4serv00) 。
 
 ### 部署
@@ -65,6 +67,10 @@ bash <(curl -s https://raw.githubusercontent.com/k0baya/X-for-serv00/main/entryp
 2 [UptimeRobot](https://uptimerobot.com/) 
 
 同时，你也可以选择自建 [Uptime-Kuma](https://github.com/louislam/uptime-kuma) 等服务进行监控。
+
+>建议监控 `/info` 路径，因为该路径无需身份验证。
+>
+>不要监控根路径，因为根路径为静态页面，只是该项目的伪装，无法起到保活效果。
 
 ### 更换 Cloudflare CDN 接入点
 

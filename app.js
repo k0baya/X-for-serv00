@@ -14,7 +14,7 @@ const USERNAME = os.userInfo().username;
 const WORKDIR = path.join('/home', USERNAME, 'domains', `${USERNAME}.serv00.net`, 'public_nodejs');
 process.chdir(WORKDIR);
 
-app.get("/", function (req, res) {
+app.get("/info", function (req, res) {
   res.type("html").send("<pre>Powered by X-for-Serv00\nAuthor: <a href='https://github.com/k0baya'>K0baya</a>" + "</pre>");
 });
 
