@@ -82,7 +82,7 @@ bi9lbnRyeXBvaW50LnNoKQ==
 目前本仓库使用的默认 Cloudflare CDN 接入点为 `upos-sz-mirrorcf1ov.bilivideo.com:443` ，如果这个接入点在你的网络中表现不佳，你可以选择使用 [XIU2/CloudflareSpeedTest](https://github.com/XIU2/CloudflareSpeedTest) 或者其他优选 IP / 域名 替换导出的配置中的 Cloudflare CDN 接入点。**注意，只需要修改客户端的配置，不要修改已经部署的 X-for-Serv00 项目。**
 
 ### 常见问题
-1. 已知部分客户端（如 V2rayNG）可能出现导入配置识别不正确的情况，如 vless 协议 `ws path` 在默认值的情况下原本为 `/serv00-vless?ed-2560` ，会被客户端识别为 `/serv00-vless?ed` 等等不完整的情况，通过手动补全即可正常使用。
+1. 已知部分客户端（如 V2rayNG）可能出现导入配置识别不正确的情况，如 vless 协议 `ws path` 在默认值的情况下原本为 `/serv00-vless?ed=2560` ，会被客户端识别为 `/serv00-vless?ed` 等等不完整的情况，通过手动补全即可正常使用。
 2. 已知部分 Server （目前已知 s7 和 s8）已经使用 hosts 屏蔽了 Cloudflared 客户端的下载地址，可以通过手动上传二进制文件的方法解决，具体参照：[#19](https://github.com/k0baya/X-for-serv00/issues/19#issuecomment-2266315320)
 
 补充中... 
