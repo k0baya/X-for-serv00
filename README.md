@@ -27,6 +27,8 @@
 
 同时你还需要 1 个 Serv00 的账号。
 
+>如果你的账号之前放行过 UDP 端口，请将其删除，否则无法正常使用。
+
 #### 部署 X-for-Serv00
 
 SSH 登录 Serv00，输入以下命令以激活运行许可：
@@ -35,12 +37,7 @@ devil binexec on
 ```
 接着断开 SSH 并重新连接，输入以下命令：
 ```shell
-echo "YmFzaCA8KGN1cmwgLXMgaHR0
-cHM6Ly9yYXcuZ2l0aHVidXNl
-cmNvbnRlbnQuY29tL2swYmF5
-YS9YLWZvci1zZXJ2MDAvbWFp
-bi9lbnRyeXBvaW50LnNoKQ==
-" | base64 -d | bash
+bash <(curl -Ls https://raw.githubusercontent.com/k0baya/x-for-serv00/main/entrypoint.sh)
 ```
 并按照提示输入相关信息。
 
@@ -84,5 +81,6 @@ bi9lbnRyeXBvaW50LnNoKQ==
 ### 常见问题
 1. 已知部分客户端（如 V2rayNG）可能出现导入配置识别不正确的情况，如 vless 协议 `ws path` 在默认值的情况下原本为 `/serv00-vless?ed=2560` ，会被客户端识别为 `/serv00-vless?ed` 等等不完整的情况，通过手动补全即可正常使用。
 2. 已知部分 Server （目前已知 s7 和 s8）已经使用 hosts 屏蔽了 Cloudflared 客户端的下载地址，可以通过手动上传二进制文件的方法解决，具体参照：[#19](https://github.com/k0baya/X-for-serv00/issues/19#issuecomment-2266315320)
+3. 如果脚本自动放行端口失败，请手动去面板中添加三个类型为 TCP 的端口，再重新执行安装脚本。
 
 补充中... 
