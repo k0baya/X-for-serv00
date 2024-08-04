@@ -1,0 +1,26 @@
+{
+    "name": "x-for-serv00",
+    "version": "1.0.0-direct",
+    "description": "A simple Express.js server to run X on Serv00",
+    "author": "k0baya (https://github.com/k0baya)",
+    "main": "app.js",
+    "license": "MIT",
+    "private": false,
+    "scripts": {
+      "start": "node app.js"
+    },
+    "dependencies": {
+      "express": "^4.18.2",
+      "basic-auth": "^2.0.1",
+      "dotenv": "^16.0.3"
+    },
+    "engines": {
+      "node": "22"
+    },
+    "repository": {
+      "url": "https://github.com/k0baya/X-for-serv00/tree/direct"
+    },
+    "keywords": [
+      "node"
+    ]
+  }
