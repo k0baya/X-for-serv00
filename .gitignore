@@ -1,3 +1,5 @@
 origin_entrypoint.sh
+origin_entrypoint_direct.sh
 .gitattributes
 .env
+.gitignore
