@@ -2,6 +2,7 @@ require('dotenv').config();
 const process = require('process');
 const username = process.env.WEB_USERNAME || "admin";
 const password = process.env.WEB_PASSWORD || "password";
+const UUID = process.env.UUID || "de04add9-5c68-8bab-950c-08cd5320df18";
 const os = require('os');
 const path = require('path');
 const express = require("express");
@@ -16,6 +17,17 @@ process.chdir(WORKDIR);
 
 app.get("/info", function (req, res) {
   res.type("html").send("<pre>Powered by X-for-Serv00\nAuthor: <a href='https://github.com/k0baya'>K0baya</a>" + "</pre>");
+});
+
+app.get(`/${UUID}/sub`, function (req, res) {
+  let cmdStr = "cat sub";
+  exec(cmdStr, function (err, stdout, stderr) {
+    if (err) {
+      res.type("html").send("<pre>命令行执行错误：\n" + err + "</pre>");
+    } else {
+      res.send(stdout);
+    }
+  });
 });
 
 // 页面访问密码
@@ -40,7 +52,6 @@ app.get("/status", function (req, res) {
   });
 });
 
-//获取节点数据
 app.get("/list", async function (req, res) {
   let cmdStr = "cat list";
   const fileExists = (path) => {
@@ -72,7 +83,8 @@ app.get("/list", async function (req, res) {
     if (err) {
       res.type("html").send("<pre>命令行执行错误：\n" + err + "</pre>");
     } else {
-      res.type("html").send("<pre>节点数据：\n\n" + stdout + "</pre>");
+      const fullUrl = `${req.protocol}://${req.get('host')}/${UUID}/sub`;
+      res.type("html").send("<pre>订阅地址：" + fullUrl + "\n\n节点数据：\n\n" + stdout + "</pre>");
     }
   });
 });
