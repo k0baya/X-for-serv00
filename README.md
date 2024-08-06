@@ -1,6 +1,6 @@
 ## X-for-Serv00
 
-直连版本，不使用 Cloudflare CDN，并且去掉了网页。采用 Vless-xtls-vision-reality、Vmess-tls-ws、Trojan-tls 三协议，每个协议 3 个接入点，共 9 个节点，需要单一账号部署，账号内不得部署其他应用。已通过 Warp 解锁 ChatGPT、Netflix，并添加 IPv6。
+直连版本，不使用 Cloudflare CDN。采用 Vless-xtls-vision-reality、Vmess-tls-ws、Trojan-tls 三协议，每个协议 3 个接入点，共 9 个节点，需要单一账号部署，账号内不得部署其他应用。已通过 Warp 解锁 ChatGPT、Netflix，并添加 IPv6。
 
 ### 部署
 #### 准备工作
