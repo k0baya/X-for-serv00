@@ -17,9 +17,9 @@
 
 #### 部署 X-for-Serv00
 
-SSH 登录 Serv00，输入以下命令以激活运行许可：
+SSH 登录 Serv00，输入以下命令：
 ```shell
-devil binexec on
+devil binexec on && killall -u $(whoami)
 ```
 接着断开 SSH 并重新连接，输入以下命令：
 ```shell
