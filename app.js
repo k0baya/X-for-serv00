@@ -46,7 +46,8 @@ app.use((req, res, next) => {
 });
 
 const USERNAME = os.userInfo().username;
-const WORKDIR = path.join('/home', USERNAME, 'domains', `${USERNAME}.serv00.net`, 'public_nodejs');
+const USERNAME_DOMAIN = USERNAME.toLowerCase().replace(/[^a-z0-9-]/g, '');
+const WORKDIR = path.join('/home', USERNAME, 'domains', `${USERNAME_DOMAIN}.serv00.net`, 'public_nodejs');
 process.chdir(WORKDIR);
 
 app.get("/info", function (req, res) {
