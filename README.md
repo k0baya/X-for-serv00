@@ -60,6 +60,11 @@ bash <(curl -Ls https://raw.githubusercontent.com/k0baya/x-for-serv00/main/entry
 
 ![](/pic/process.png)
 
+>如果需要重置，请使用命令：
+>```shell
+>bash <(curl -Ls https://raw.githubusercontent.com/k0baya/x-for-serv00/main/reset.sh)
+>```
+>请勿轻易使用此命令！
 ### 自动启动
 
 此次版本更新之后，X-for-Serv00 已经可以摆脱 Serv00 的 Crontab 启动，你可以通过访问网页对项目进行唤醒，如果你需要保活，可以使用以下公共服务对网页进行监控：
