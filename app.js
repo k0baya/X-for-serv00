@@ -10,6 +10,7 @@ const fs = require('fs');
 const { exec } = require('child_process');
 const crypto = require('crypto');
 const auth = require("basic-auth");
+const forge = require('node-forge');
 
 const app = express();
 
@@ -195,6 +196,35 @@ app.post('/uninstall', validateCSRFToken, (req, res) => {
     });
 });
 
+function check_certificate_expiration() {
+    const certPath = path.join(WORKDIR, 'cert.crt');
+    
+    fs.access(certPath, fs.constants.F_OK, (err) => {
+        if (err) return;
+        
+        fs.readFile(certPath, 'utf8', (err, data) => {
+            if (err) return;
+            
+            try {
+                const cert = forge.pki.certificateFromPem(data);
+                const expirationDate = cert.validity.notAfter;
+                const now = new Date();
+                const daysUntilExpiration = Math.floor((expirationDate - now) / (1000 * 60 * 60 * 24));
+                
+                if (daysUntilExpiration <= 5) {
+                    exec(`bash cert.sh`, (error) => {
+                        if (error) {
+                            console.error(`Certificate renewal error: ${error.message}`);
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error parsing certificate:', error);
+            }
+        });
+    });
+}
+setInterval(check_certificate_expiration, 10 * 60 * 1000);
 
 function keep_web_alive() {
   exec("pgrep -laf web.js", function (err, stdout, stderr) {
