@@ -287,28 +287,22 @@ generate_config() {
     "outbounds": [
         {
             "protocol": "freedom",
-            "settings": {
-                "domainStrategy": "UseIPv4"
-            },
-            "streamSettings": {
-                "sockopt": {
-                    "tcpFastOpen": true
-                }
-            }
+            "tag": "direct"
         },
         {
             "protocol": "blackhole",
-            "settings": {},
             "tag": "block"
         }
     ],
-    "routing": {
-        "domainStrategy": "IPIfNonMatch",
-        "rules": [
+    "routing":{
+        "domainStrategy":"AsIs",
+        "rules":[
             {
-                "type": "field",
-                "outboundTag": "block",
-                "ip": ["::/0"]
+                "type":"field",
+                "domain":[
+                    "geosite:category-ads-all"
+                ],
+                "outboundTag":"block"
             }
         ]
     }
