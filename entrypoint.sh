@@ -116,33 +116,26 @@ generate_config(){
     ],
     "outbounds": [
         {
-			"protocol": "freedom",
-			"settings": {
-				"domainStrategy": "UseIPv4"
-			},
-			"streamSettings": {
-				"sockopt": {
-					"tcpFastOpen": true
-				}
-			}
-		},
+            "protocol": "freedom",
+            "tag": "direct"
+        },
         {
             "protocol": "blackhole",
-            "settings": {},
             "tag": "block"
         }
     ],
-	"routing": {
-		"domainStrategy": "IPIfNonMatch",
-		"rules": [{
-				"type": "field",
-				"outboundTag": "block",
-				"ip": [
-					"::/0"
-				]
-			}
-		]
-	}
+    "routing":{
+        "domainStrategy":"AsIs",
+        "rules":[
+            {
+                "type":"field",
+                "domain":[
+                    "geosite:category-ads-all"
+                ],
+                "outboundTag":"block"
+            }
+        ]
+    }
 }
 EOF
 }
@@ -329,12 +322,13 @@ get_certificate() {
     local SPAREHOST2=$(devil vhost list | awk 'NR>1 {print $2}' | grep '^w')
 
     generate_certificate(){
-cat > cert.sh << EOF
+        cat > cert.sh << EOF
+#!/bin/bash
 WORKDIR="${WORKDIR}"
 IP_ADDRESS="${IP_ADDRESS}"
 DOMAIN="${DOMAIN}"
 SERV00PASSWORD="${SERV00PASSWORD}"
-CERT_OUTPUT=\$(env SERV00PASSWORD="\$SERV00PASSWORD" expect << ABC
+CERT_OUTPUT=\$(env SERV00PASSWORD="\${SERV00PASSWORD}" expect << ABC
 spawn devil ssl www get "\${IP_ADDRESS}" "\${DOMAIN}"
 expect "Password:"
 send "\\\$env(SERV00PASSWORD)\r"
@@ -343,17 +337,17 @@ catch wait result
 puts "\nResult: \\\$result\n"
 ABC
 )
-    local CERTIFICATE=\$(echo "\$CERT_OUTPUT" | awk '/-----BEGIN CERTIFICATE-----/,/-----END CERTIFICATE-----/' ORS='\n')
-    local PRIVATE_KEY=\$(echo "\$CERT_OUTPUT" | awk '/-----BEGIN PRIVATE KEY-----/,/-----END PRIVATE KEY-----/' ORS='\n')
-    if [ -z "\${CERTIFICATE}" ] || [ -z "\${PRIVATE_KEY}" ]; then
-        echo "证书获取失败，请检查是否在面板中成功获取到Let's Encrypt证书" > \${WORKDIR}/list
-        exit 1
-    fi
-    [ -e \${WORKDIR}/cert.crt ] && rm -f \${WORKDIR}/cert.crt
-    [ -e \${WORKDIR}/private.key ] && rm -f \${WORKDIR}/private.key
-    echo "\$CERTIFICATE" > \${WORKDIR}/cert.crt
-    echo "\$PRIVATE_KEY" > \${WORKDIR}/private.key
-    killall -q web.js cloudflared
+CERTIFICATE=\$(echo "\$CERT_OUTPUT" | awk '/-----BEGIN CERTIFICATE-----/,/-----END CERTIFICATE-----/' ORS='\n')
+PRIVATE_KEY=\$(echo "\$CERT_OUTPUT" | awk '/-----BEGIN PRIVATE KEY-----/,/-----END PRIVATE KEY-----/' ORS='\n')
+if [ -z "\${CERTIFICATE}" ] || [ -z "\${PRIVATE_KEY}" ]; then
+    echo "证书获取失败，请检查是否在面板中成功获取到Let's Encrypt证书"
+    exit 1
+fi
+[ -e \${WORKDIR}/cert.crt ] && rm -f \${WORKDIR}/cert.crt
+[ -e \${WORKDIR}/private.key ] && rm -f \${WORKDIR}/private.key
+echo "\$CERTIFICATE" > \${WORKDIR}/cert.crt
+echo "\$PRIVATE_KEY" > \${WORKDIR}/private.key
+killall -q web.js cloudflared
 EOF
     chmod +x cert.sh
     bash cert.sh
