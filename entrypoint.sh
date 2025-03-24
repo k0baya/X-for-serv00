@@ -214,8 +214,19 @@ get_core() {
         install -m 755 "${TMP_DIRECTORY}/xray" "${WORKDIR}/web.js"
         rm -rf "$TMP_DIRECTORY"
     fi
+    
+    echo "正在下载 GEOSITE 数据库，请稍候..."
+    wget -O ${WORKDIR}/geosite.dat https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat
+    if [ $? -ne 0 ]; then
+        echo "GEOSITE 数据库下载失败！请检查网络情况！"
+        exit 1
+        
+    echo "正在下载 GEOIP 数据库，请稍候..."
+    wget -O ${WORKDIR}/geoip.dat https://github.com/v2fly/geoip/releases/latest/download/geoip.dat
+    if [ $? -ne 0 ]; then
+        echo "GEOIP 数据库下载失败！请检查网络情况！"
+        exit 1
 }
-
 
 generate_config() {
     cat > ${WORKDIR}/config.json << EOF
